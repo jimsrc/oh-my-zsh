@@ -13,8 +13,23 @@
 #  - `pjo my-project` will open the directory in $EDITOR
 # 
 
+function cd_and_enter(){
+    dir_link=$1
+    dir_real=`readlink ${dir_link}`
+
+    if [[ -d ${dir_real} ]] then
+        cd ${dir_real}
+    else
+        echo
+        echo " ### ERROR ###: not a directory: '${dir_link}' ---> ${dir_real}' "
+        echo
+    fi
+    unset dir_link
+    unset dir_real
+}
+
 function pj() {
-    cmd="cd"
+    cmd="cd_and_enter" #"cd"
     file=$1
 
     if [[ "open" == "$file" ]] then
