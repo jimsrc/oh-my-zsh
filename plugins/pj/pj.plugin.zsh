@@ -17,8 +17,10 @@ function cd_and_enter(){
     dir_link=$1
     dir_real=`readlink ${dir_link}`
 
-    if [[ -d ${dir_real} ]] then
+    if [[ -d ${dir_real} ]] then # in case it's a link to a dir
         cd ${dir_real}
+    elif [[ -d ${dir_link} ]] then # maybe it's a dir itself
+        cd ${dir_link}
     else
         echo
         echo " ### ERROR ###: not a directory: '${dir_link}' ---> ${dir_real}' "
