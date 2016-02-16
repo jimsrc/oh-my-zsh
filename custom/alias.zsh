@@ -479,4 +479,15 @@ git.report(){
 #+++++ MPI
 alias mpirun_sys=/usr/local/bin/mpirun      # to not to confuse with Anaconda's
 
+#+++++++++ TMUX
+export TMUX=$HOME/local/bin/tmux
+alias tmux="$TMUX -2 "  # assumes the terminal supports 256 colours
+alias tmux.conf='vim $HOME/.tmux.conf'
+alias tl='$TMUX -2 list-sessions'
+alias tc='$TMUX -2 new -s'
+alias ta='$TMUX -2 attach -t'
+# ### other tricks ###
+# <Prefix> & for killing a window
+# <Prefix> x for killing a pane
+
 ##
