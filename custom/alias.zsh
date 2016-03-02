@@ -12,7 +12,7 @@ alias matlab_='/usr/local/MATLAB/R2010b/bin/matlab -nodesktop -nosplash'
 
 
 #------------------------- terminal en gral
-alias cdd='cd -' # previous directory
+#alias cdd='cd -' # previous directory
 alias mon_hdd='sudo iotop -o -d 0.3' # "-o" es para q muestre solo los activos, "-d" es segundos de actualizac
 alias busca1='find -name'
 alias pp='ping yahoo.com'
@@ -28,7 +28,7 @@ alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 alias mp3='mpg123'
 alias tot='totem'
-PAO=$HOME/ccin2p3/in2p3_data/
+export PAO=$HOME/ccin2p3/in2p3_data/
 alias pao='cd $PAO'
 alias pao_saber='cd $PAO/data_auger/procesamiento/data_SABER'
 alias pao_histos='cd $PAO/data_auger/procesamiento/histos'
@@ -40,12 +40,35 @@ alias grey='$HOME/bash/busca_caracter.sh "*py"'
 alias utc2fecha='$HOME/bash/utc2fecha.sh'
 alias fecha2utc='$HOME/bash/fecha2utc.sh'
 
-alias png2eps='/home/jim/bash/png2eps.sh'
+alias png2eps='$HOME/bash/png2eps.sh'
 #alias rsync_='g++ $HOME/bash/rsync_c.c -o $HOME/bash/rsync_.x; $HOME/bash/rsync_.x'
 alias rsy='$HOME/python_scripts/rsync/my_rsync.py'
 
 #
-alias q='find -ipath'
+#alias q='find -ipath'
+#q(){
+#    pattern_grep=`echo $1 | sed "s/\\*/.\\*/g"`
+#    echo $pattern_grep
+#    find -ipath $1 | grep "${pattern_grep}"
+#}
+
+q(){
+    pattern_grep=`echo $1 | sed "s/\\*/.\\*/g"`
+    if [[ $pattern_grep = $'.\*'*$'.\*' ]]; then
+        #echo " BOTH ENDS!! "
+        pattern_grep="${pattern_grep[3,-3]}"
+    elif [[ $pattern_grep = $'.\*'* ]]; then
+        #echo "FOUND AT BEGINING!!"
+        pattern_grep="${pattern_grep[3,-1]}" # extract 2 first characters
+    elif [[ $pattern_grep = *$'.\*' ]]; then
+        #echo "FOUND AT ENDING!!"
+        pattern_grep="${pattern_grep[1,-3]}" # extract 2 last characters
+    fi
+    #echo " --> coloreando: " $pattern_grep
+    find -ipath $1 | grep "${pattern_grep}"
+}
+
+
 alias duu='du -h --max-depth=1'
 alias duu_ordered='du --max-depth=1 | sort -n -r'
 alias dff='df -h'
@@ -55,6 +78,7 @@ alias coeficiente_correlacion='matlab -nodesktop -r coef_correlacion'
 alias lss='ls -lthr' # ordena por tiempo de ultima modificacion y muestra los tamaños
                                 # en formato 'human-friendly' (1K, 1M, etc)
 alias lx='lss *tex'
+alias todo='vim $DROP/cosas_trabajo/todo.txt'
 
 #++++++++++++++++++++++++++++ VIM CONFIG
 export EXE_VIM='/usr/bin/vim'
@@ -209,7 +233,7 @@ alias sim_pyc++='cd $SIM/prts/p01/pyc++'
 alias sim_p02='cd $SIM/prts/p02'
 alias mk='time make' # pa compilar
 alias poster='cd $HOME/posters'
-alias charla='cd $HOME/charlas'
+#alias charla='cd $HOME/charlas'
 
 #export PAPERS=$HOME/actividad_solar/papers 
 #export PAPERS=$HOME/Dropbox/shared_wcell/papers 
@@ -309,18 +333,19 @@ alias icmes_correls_figs.ace='cd $ASO/correlaciones/contrastes/_all_.vs._all_/pn
 alias icmes_densities.surf='cd $ASO/icmes_richardson/data/mean_profiles/ace/sheaths/plots/MCflag2/wShiftCorr/_test_Vmc_'
 
 
-alias cv_english='cd /home/jim/application/cv_general/english/'
-alias cv_espaniol='cd /home/jim/application/cv_general/espaniol/'
-alias icrc_asorey='ok /home/jim/actividad_solar/papers/asorey_etal11_icrc_measurement_low_energy_cosmic_radiation_water_cherenkov_detector_array_pierre_auger_observatory.pdf &'
-alias libro_greider='ok "/home/jim/actividad_solar/libros/greider_cosmic rays at earth.pdf"'
-alias poster_cospar='ok /home/jim/posters/poster_cospar/poster_cospar.pdf &'
+alias cv_english='cd $HOME/application/cv_general/english/'
+alias cv_espaniol='cd $HOME/application/cv_general/espaniol/'
+alias icrc_asorey='ok $HOME/actividad_solar/papers/asorey_etal11_icrc_measurement_low_energy_cosmic_radiation_water_cherenkov_detector_array_pierre_auger_observatory.pdf &'
+alias libro_greider='ok "$HOME/actividad_solar/libros/greider_cosmic rays at earth.pdf"'
+alias poster_cospar='ok $HOME/posters/poster_cospar/poster_cospar.pdf &'
 alias oficina='cd /media/Elements/oficina/'
-alias RSYNC='/home/jim/bash/RSYNC.sh'
+alias RSYNC='$HOME/bash/RSYNC.sh'
 alias sincronizar_TODO_='/home/masiasmj/bash/sincronizar_TODO_at_forbush.sh'
 alias scr='$HOME/bash/screenlist.sh'
 alias snd='$HOME/bash/snd.sh'
 alias taill='tail -f'
 alias mkdirr='mkdir -p'
+alias t='time'
 alias libro_oksendal92='ok $HOME/actividad_solar/libros/oksendal92_stochastic_differential_equations_applications.pdf'
 alias libro_caceres02='ok $HOME/actividad_solar/libros/caceres02_elementos_estadistica_de_no_equilibrio_aplicaciones.pdf'
 alias libro_gardiner04='djview "$HOME/actividad_solar/libros/gardiner04_handbook of stochastic methods.djvu" &'

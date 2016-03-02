@@ -39,4 +39,33 @@ export DROP=$HOME/Dropbox
 
 #alias zzz='ls $HOME/*py'
 
+#++++++ charlas ++++++++
+charla(){
+    name=$*
+    cd "$HOME/charlas/$name"
+    return
+}
 
+function _charla () {
+    # might be possible to improve this using glob, without the basename trick
+    typeset -a charlas_dir
+    charlas_dir=($HOME/charlas/*)
+    charlas_dir=$charlas_dir:t
+    _arguments "*:name:($charlas_dir)"
+}
+
+compdef _charla charla
+#++++++++++++++++++++++++
+#
+#
+#+++++++++++ other tools +++++++++++++++
+# author: jimmy
+#
+# cdd: Enter to directory of a full-path-filename
+cdd(){
+    fname_full=$1
+    fname=`basename ${fname_full}`
+    dir_of_file=`echo ${fname_full} | sed "s/\\/$fname//g"`
+    cd ${dir_of_file}
+    unset fname_full  fname  dir_of_file
+}
