@@ -22,7 +22,8 @@ source $CDAS/Work/$CDASVERSION/cmt/cdas.sh
 export CMTPATH=$CDAS/:$CDAS/IoFd:$CMTPATH:$WORK
 
 # for Anaconda (python packages):
-export ANACONDA=$HOME/anaconda
+#export ANACONDA=$HOME/anaconda
+export ANACONDA=$HOME/anaconda2
 export PATH=$ANACONDA/bin:$PATH
 #export PATH=${HOME}/.local/bin${PATH:+:$PATH}
 #export DYLD_LIBRARY_PATH=/usr/local/lib:$ROOTSYS/lib:$ANACONDA/lib
@@ -69,3 +70,27 @@ cdd(){
     cd ${dir_of_file}
     unset fname_full  fname  dir_of_file
 }
+
+#------ directorios de trabajo
+#export AUGER_HISTOS_DATA="$HOME/AUGER_RAW_DATA/data"
+#--- directorios de trabajo
+#export AUGER_HISTOS_DATA="$HOME/auger_ascii/histogramas/root"
+export AUGER_REPO=$HOME/ccin2p3/in2p3_data/data_auger/procesamiento/histos.aop_all
+export AUGER_LOCAL_HISTOS="$HOME/auger_ascii/histogramas/root"
+export AUGER_RAWDATA="/media/Elements/AUGER_RAWDATA"
+export AUGER_RAWDATA_HSTS="$AUGER_RAWDATA/data"
+export AUGER_RAWDATA_MON="$AUGER_RAWDATA/monit"
+export MoIO="$HOME/CDAS/MoIO/v5r6" # aqui esta el src/, Linux../, cmt/
+export PAO_PROCESS=$PAO/data_auger/procesamiento
+export AUGER_LOCAL_INTERMEDIATE="$HOME/_tmp_/intermediate"
+
+
+#--- otros paths
+export MEAN_PROFILES_ACE=$HOME/ASOC_ICME-FD/icmes_richardson/data/mean_profiles/ace
+
+
+#--- otros
+export PLA1=$HOME/simulacion/pla_stochastic/composite_turbulence/single_orbits
+
+
+#EOF

@@ -28,7 +28,7 @@ alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 alias mp3='mpg123'
 alias tot='totem'
-export PAO=$HOME/ccin2p3/in2p3_data/
+export PAO=$HOME/ccin2p3/in2p3_data
 alias pao='cd $PAO'
 alias pao_saber='cd $PAO/data_auger/procesamiento/data_SABER'
 alias pao_histos='cd $PAO/data_auger/procesamiento/histos'
@@ -40,7 +40,15 @@ alias grey='$HOME/bash/busca_caracter.sh "*py"'
 alias utc2fecha='$HOME/bash/utc2fecha.sh'
 alias fecha2utc='$HOME/bash/fecha2utc.sh'
 
-alias png2eps='$HOME/bash/png2eps.sh'
+#--- convertir tipos de imagenes
+#alias png2eps='$HOME/bash/png2eps.sh'
+png2eps(){
+    convert -density 100 $1.png $1.eps 
+}
+eps2png(){
+    convert -density 200 $1.eps -flatten $1.png
+}
+
 #alias rsync_='g++ $HOME/bash/rsync_c.c -o $HOME/bash/rsync_.x; $HOME/bash/rsync_.x'
 alias rsy='$HOME/python_scripts/rsync/my_rsync.py'
 
@@ -85,14 +93,16 @@ export EXE_VIM='/usr/bin/vim'
 export EXE_VIEW='/usr/bin/view'
 alias vieww='$EXE_VIEW -u $HOME/.vimrc_normal.mio' 
 alias vim_normal='$EXE_VIM -u $HOME/.vimrc_normal' 
-alias vim='$HOME/bash/vimx.sh vim'
-alias view='$HOME/bash/vimx.sh view'
+#alias vim='$HOME/bash/vimx.sh vim'
+#alias view='$HOME/bash/vimx.sh view'
 alias vim_ReadOnly_fisa='$EXE_VIM -u $HOME/.vimrc_ii_ro'                    # read-only (with fisa-vim)
 alias view_ReadOnly_fisa='$EXE_VIEW -u $HOME/.vimrc_ii_ro'                    # read-only (with fisa-vim)
 alias vim_ReadOnly_simple='$EXE_VIM -u $HOME/.vimrc_normal.mio_ReadOnly'    # read-only (basic) 
 alias view_ReadOnly_simple='$EXE_VIEW -u $HOME/.vimrc_normal.mio_ReadOnly'    # read-only (basic) 
 alias view_=view_ReadOnly_fisa
+alias vims='vim -S session.vim'
 #++++++++++++++++++++++++++++++++++++++
+alias qy='q "*py"'
 alias lnf='ln -sf'
 alias lf='lss *pdf'
 alias ly='lss *py'
@@ -344,7 +354,11 @@ alias sincronizar_TODO_='/home/masiasmj/bash/sincronizar_TODO_at_forbush.sh'
 alias scr='$HOME/bash/screenlist.sh'
 alias snd='$HOME/bash/snd.sh'
 alias taill='tail -f'
-alias mkdirr='mkdir -p'
+#alias mkdirr='mkdir -p'
+function mkdirr(){
+    mkdir -p $1
+    cd $1
+}
 alias t='time'
 alias libro_oksendal92='ok $HOME/actividad_solar/libros/oksendal92_stochastic_differential_equations_applications.pdf'
 alias libro_caceres02='ok $HOME/actividad_solar/libros/caceres02_elementos_estadistica_de_no_equilibrio_aplicaciones.pdf'
@@ -505,14 +519,20 @@ git.report(){
 alias mpirun_sys=/usr/local/bin/mpirun      # to not to confuse with Anaconda's
 
 #+++++++++ TMUX
-export TMUX=$HOME/local/bin/tmux
-alias tmux="$TMUX -2 "  # assumes the terminal supports 256 colours
+export MYTMUX=$HOME/local/bin/tmux_2.1
+alias tmux="$MYTMUX -2 "  # assumes the terminal supports 256 colours
 alias tmux.conf='vim $HOME/.tmux.conf'
-alias tl='$TMUX -2 list-sessions'
-alias tc='$TMUX -2 new -s'
-alias ta='$TMUX -2 attach -t'
+alias tl='$MYTMUX -2 list-sessions | grep ".*: "'
+alias tc='$MYTMUX -2 new -s'
+#alias ta='$MYTMUX -2 attach -t'
 # ### other tricks ###
 # <Prefix> & for killing a window
 # <Prefix> x for killing a pane
+ta(){ $MYTMUX -2 attach -t $1 }
+#--- autocomplete
+function _ta {
+    reply=( `$MYTMUX list-sessions | sed "s/:.*//g"` );
+}
+compctl -K _ta ta
 
 ##

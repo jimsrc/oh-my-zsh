@@ -8,9 +8,17 @@ rbenv_version() {
   rbenv version 2>/dev/null | awk '{print $1}'
 }
 
+# color vars
+eval my_gray='$FG[237]'
+eval my_orange='$FG[214]'
+
 PROMPT='
-%{$fg_bold[green]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info) ⌚ %{$fg_bold[red]%}%*%{$reset_color%}
+%{$fg_bold[blue]%~$reset_color%}$(git_prompt_info) ⌚ %{$fg_bold[red]%}$my_gray$(date --date "now" +"%H:%M %d/%b")%{$reset_color%}
 $ '
+# version 2
+#%{$fg_bold[blue]%~$reset_color%}$(git_prompt_info) ⌚ %{$fg_bold[red]%}$my_gray%*%{$reset_color%}
+# version original 
+#%{$fg_bold[blue]%}${PWD/#$HOME/~}%{$reset_color%}$(git_prompt_info) ⌚ %{$fg_bold[red]%}$my_gray%*%{$reset_color%}
 
 # Must use Powerline font, for \uE0A0 to render.
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}\uE0A0 "
