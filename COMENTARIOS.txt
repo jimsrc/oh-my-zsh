@@ -1,0 +1,8 @@
+COSAS A TENER EN CUENTA:
+
+-   En el archivo "$ZSH/oh-my-zsh.sh" tenemos:
+
+    l 76: for config_file ($ZSH_CUSTOM/*.zsh(N)); do.....
+
+    Es decir, se sourcean todos los *.zsh q esten en $ZSH_CUSTOM. Entonces
+    podemos agregar todos los scripts q querramos q se cargen.
