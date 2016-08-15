@@ -13,8 +13,26 @@
 #  - `pjo my-project` will open the directory in $EDITOR
 # 
 
+function cd_and_enter(){
+    dir_link=$1
+    dir_real=`readlink ${dir_link}`
+
+    if [[ -d ${dir_real} ]] then         # follow the symlink 
+        cd ${dir_real}
+    elif [[ "${dir_real}" == "" ]] then  # the argument is a directory and *not* symlink
+        cd ${dir_link}
+    else                                 # 'dir_link' is not a symlink, neither a directory
+        echo
+        echo " ### ERROR ###: not a directory: '${dir_link}' ---> '${dir_real}' "
+        echo
+    fi
+    unset dir_link
+    unset dir_real
+}
+
+
 function pj() {
-    cmd="cd"
+    cmd="cd_and_enter" #"cd"
     file=$1
 
     if [[ "open" == "$file" ]] then
