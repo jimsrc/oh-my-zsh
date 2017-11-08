@@ -15,7 +15,9 @@
 
 function cd_and_enter(){
     dir_link=$1
+    echo " DIR_LINK: " ${dir_link}
     dir_real=`readlink ${dir_link}`
+    echo " DIR_REAL: " ${dir_real}
 
     if [[ -d ${dir_real} ]] then         # follow the symlink 
         cd ${dir_real}
@@ -34,6 +36,7 @@ function cd_and_enter(){
 function pj() {
     cmd="cd_and_enter" #"cd"
     file=$1
+    #echo " ----> ARG IS: " $file
 
     if [[ "open" == "$file" ]] then
         shift
@@ -45,7 +48,12 @@ function pj() {
 
     for project in $PROJECT_PATHS; do
         if [[ -d $project/$file ]] then
-            $cmd "$project/$file"
+            dir_top=$(echo $file | awk -F "/" '{print $1}')
+            $cmd "$project/${dir_top}"  # cd into upper dir
+            dir_down=$(echo $file | sed 's/^[^\/]*\///g')
+            # find the first "/" occurrence:
+            # https://unix.stackexchange.com/questions/232657/delete-till-first-occurrence-of-colon-using-sed
+            [[ "${dir_top}" != "${dir_down}" ]] && cd $dir_down # cd intro complete path (only if the given full path contains a "/")
             unset project # Unset project var
             return
         fi
@@ -58,10 +66,12 @@ alias pjo="pj open"
 
 function _pj () {
     # might be possible to improve this using glob, without the basename trick
-    typeset -a projects
-    projects=($PROJECT_PATHS/*)
-    projects=$projects:t
-    _arguments "*:file:($projects)"
+    #typeset -a projects
+    #projects=($PROJECT_PATHS/*)
+    #projects=$projects:t
+    #_arguments "*:file:($projects)"
+    _files -W ${PROJECT_PATHS}/
+    #_files -W $WORK/charlas/
 }
 
 compdef _pj pj
