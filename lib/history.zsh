@@ -4,7 +4,7 @@ if [ -z "$HISTFILE" ]; then
 fi
 
 HISTSIZE=10000
-SAVEHIST=10000
+SAVEHIST=${HISTSIZE}
 
 # Show history
 case $HIST_STAMPS in
